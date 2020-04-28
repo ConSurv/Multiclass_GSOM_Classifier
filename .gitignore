@@ -1,0 +1,16 @@
+
+.idea/
+
+*.pyc
+
+*.pickle
+
+*.jpeg
+
+applications/zoo_experiment/__pycache__/
+
+core4/__pycache__/
+
+params/__pycache__/
+
+util/__pycache__/
