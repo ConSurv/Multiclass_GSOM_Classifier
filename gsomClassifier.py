@@ -121,27 +121,6 @@ class GSOMClassifier():
         print('Completed.')
 
 
-df = pd.read_csv("data/train.csv")
-df = df.replace("nan", np.NaN)
-# print(df.isnull().sum())
-df.fillna(df.mean(), inplace=True)
-
-X = df.iloc[:, [1, 2, 3, 4, 5, 8, 9, 10, 11, 12]].values
-y = df.iloc[:, -1].values
-
-scaler = MinMaxScaler()
-X = scaler.fit_transform(X)
-
-le = LabelEncoder()
-y = le.fit_transform(y)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-gsom = GSOMClassifier()
-result_dict, classes = gsom.fit(X, y)
-gsom.dispaly(result_dict, classes)
-y_pred = gsom.predict(X_test)
-f1score = f1_score(y_test, y_pred, average='macro')
-
-print(f1_score())
 
 # X = np.load('data/casme_train2.npy')
 # y = np.load('data/casme_train_label2.npy')
