@@ -88,6 +88,22 @@ class Utilities:
             _, winner = min(nodemap.items(), key=lambda node: Utilities.get_distance_recurrent(global_context, node[1].recurrent_weights, alphas))
             return winner
 
+    def select_winner(nodemap, global_context):
+
+        if global_context.shape[0] < 2:
+            # keys = list(nodemap.keys())
+            keys = np.asarray(list(nodemap.keys()))
+            dims = nodemap[keys[0]].dimensions
+            val = [nodemap[k].recurrent_weights[0] for k in keys]
+            values = np.asarray(val)
+
+            # global_context_dim = np.tile(global_context, (values.shape[0], 1))
+            out = scipy.spatial.distance.cdist(values, global_context, 'euclidean')
+
+            # distances = np.sqrt(np.sum((values - global_context_dim)**2, axis=1))
+
+            return nodemap[keys[out.argmin()]]
+
     @staticmethod
     def select_input_to_closest_aggregate_node(aggr_node_list, input_weight, distance_function, distance_divider):
         min_dist = float("inf")

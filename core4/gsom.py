@@ -155,7 +155,7 @@ class GSOM:
     def finalize_gsom_label(self):
         # all_coordinates = self.node_labels.iloc[:, 4:]
         # all_coordinates = all_coordinates.astype(int)
-        neutral_indexes = []
+        results = []
         removable_indexes = []
         for key, value in self.gsom_nodemap.items():
             key_split = key.split(':')
@@ -204,6 +204,11 @@ class GSOM:
         for key in removable_indexes:
             del self.gsom_nodemap[key]
         # print(neutral_indexes)
+        results.append({
+            'gsom': self.gsom_nodemap,
+            'aggregated': None
+        })
+        return results
 
     def predict(self,X_test):
         y_pred = []
@@ -222,6 +227,7 @@ class GSOM:
             node_index = Utils.Utilities.generate_index(winner.x, winner.y)
             y_pred.append(winner.get_mapped_labels())
         return y_pred
+
 
     def _smooth_for_single_iteration_and_single_input(self, input_vector, learning_rate, neigh_radius):
 
